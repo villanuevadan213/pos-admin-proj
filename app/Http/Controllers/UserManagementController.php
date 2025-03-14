@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\UserActivity;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class UserManagementController extends Controller
 {
@@ -13,10 +15,19 @@ class UserManagementController extends Controller
         // Fetch all users except the currently logged-in user
         $users = User::where('id', '!=', Auth::id())->get();
 
-        // Pass the users to the view
-        return view('user-management.index', compact('users'));
-    }
+        // Fetch all user activities
+        $userActivities = DB::table('users')
+            ->join('user_activities', 'users.id', '=', 'user_activities.user_id')
+            ->select('users.id', 'users.name', 'users.email', 'user_activities.login_at', 'user_activities.logout_at')
+            ->orderByDesc(DB::raw('COALESCE(user_activities.logout_at, user_activities.login_at)'))
+            ->get()
+            ->map(function ($user) {
+                return (array) $user;
+            });
 
+        // Pass the users and user activities to the view
+        return view('user-management.index', compact('users', 'userActivities'));
+    }
     public function create()
     {
         return view('user-management.create');
@@ -28,7 +39,7 @@ class UserManagementController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'role' => 'required|string|in:Admin,User',
-            'position' => 'required|string|in:cashiers,managers,staff',
+            'position' => 'required|string|in:,Cashiers,Managers,Staff',
         ]);
 
         User::create([
@@ -53,7 +64,7 @@ class UserManagementController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
             'role' => 'required|string|in:Admin,User',
-            'position' => 'required|string|in:cashiers,managers,staff',
+            'position' => 'required|string|in:,Cashiers,Managers,Staff',
         ]);
 
         $user->update([

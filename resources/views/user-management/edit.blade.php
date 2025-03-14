@@ -37,11 +37,13 @@
                         <label for="position" class="block text-gray-700 text-sm font-bold mb-2">Position:</label>
                         <select name="position" id="position"
                             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                            <option value="cashiers" {{ $user->position == 'cashiers' ? 'selected' : '' }}>Cashiers
+                            <option value="" {{ $user->position == '' ? 'selected' : '' }}>
                             </option>
-                            <option value="managers" {{ $user->position == 'managers' ? 'selected' : '' }}>Managers
+                            <option value="Cashiers" {{ $user->position == 'Cashiers' ? 'selected' : '' }}>Cashiers
                             </option>
-                            <option value="staff" {{ $user->position == 'staff' ? 'selected' : '' }}>Staff</option>
+                            <option value="Managers" {{ $user->position == 'Managers' ? 'selected' : '' }}>Managers
+                            </option>
+                            <option value="Staff" {{ $user->position == 'Staff' ? 'selected' : '' }}>Staff</option>
                         </select>
                     </div>
                     <div class="flex items-center justify-end">

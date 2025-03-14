@@ -36,9 +36,10 @@
                         <label for="position" class="block text-gray-700 text-sm font-bold mb-2">Position:</label>
                         <select name="position" id="position"
                             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                            <option value="cashiers">Cashiers</option>
-                            <option value="managers">Managers</option>
-                            <option value="staff">Staff</option>
+                            <option value="" selected></option>
+                            <option value="Cashiers">Cashiers</option>
+                            <option value="Managers">Managers</option>
+                            <option value="Staff">Staff</option>
                         </select>
                     </div>
                     <div class="flex items-center justify-between">

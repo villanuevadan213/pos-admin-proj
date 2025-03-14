@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
+use App\Models\UserActivity;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
@@ -24,12 +25,14 @@ class AuthenticatedSessionController extends Controller
             // Record the login time
             $user = Auth::user();
             if ($user instanceof User) { // Ensure $user is an instance of User model
-                $user->update(['last_login_at' => now()]);
+                UserActivity::create([
+                    'user_id' => $user->id,
+                    'login_at' => now(),
+                ]);
             }
         
             return redirect()->intended(RouteServiceProvider::HOME);
         }
-        
 
         return back()->withErrors([
             'email' => 'The provided credentials do not match our records.',
@@ -38,6 +41,13 @@ class AuthenticatedSessionController extends Controller
 
     public function destroy(Request $request)
     {
+        $user = Auth::user();
+        if ($user instanceof User) { // Ensure $user is an instance of User model
+            UserActivity::where('user_id', $user->id)->latest()->first()->update([
+                'logout_at' => now(),
+            ]);
+        }
+
         Auth::guard('web')->logout();
 
         $request->session()->invalidate();

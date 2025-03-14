@@ -29,4 +29,9 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'last_login_at' => 'datetime',
     ];
+
+    public function activities()
+    {
+        return $this->hasMany(UserActivity::class);
+    }
 }

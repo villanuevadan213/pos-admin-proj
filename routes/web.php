@@ -4,6 +4,8 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserManagementController;
 use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\LogoutController;
 
 Route::get('/', function () {
     return view('auth.login');
@@ -26,5 +28,8 @@ Route::middleware('auth')->group(function () {
     Route::patch('/user-management/{user}', [UserManagementController::class, 'update'])->name('users.update');
     Route::delete('/user-management/{user}', [UserManagementController::class, 'destroy'])->name('users.destroy');
 });
+
+Route::post('login', [LoginController::class, 'login'])->name('login');
+Route::post('logout', [LogoutController::class, 'logout'])->name('logout');
 
 require __DIR__.'/auth.php';
