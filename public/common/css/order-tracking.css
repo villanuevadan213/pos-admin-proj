@@ -1,0 +1,22 @@
+.alert {
+    padding: 0.5rem;
+    color: white;
+    border-radius: 0.5rem;
+}
+
+.alert-Completed {
+    background-color: #28a745;
+}
+
+.alert-Processing {
+    background-color: #007bff;
+}
+
+.alert-Pending {
+    background-color: #ffc107;
+}
+
+.alert-Cancelled {
+    background-color: #dc3545;
+}
+

@@ -19,6 +19,11 @@
                     <x-nav-link :href="route('user-management')" :active="request()->routeIs('user-management')">
                         {{ __('User Management') }}
                     </x-nav-link>
+
+                    <!-- Order Tracking Link -->
+                    <x-nav-link :href="route('order-tracking')" :active="request()->routeIs('order-tracking')">
+                        {{ __('Order Tracking') }}
+                    </x-nav-link>
                 </div>
             </div>
 
@@ -77,6 +82,10 @@
             <!-- Responsive User Management Link -->
             <x-responsive-nav-link :href="route('user-management')" :active="request()->routeIs('user-management')">
                 {{ __('User Management') }}
+            </x-responsive-nav-link>
+            <!-- Responsive Order Tracking Link -->
+            <x-responsive-nav-link :href="route('order-tracking')" :active="request()->routeIs('order-tracking')">
+                {{ __('Order Tracking') }}
             </x-responsive-nav-link>
         </div>
 

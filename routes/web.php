@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserManagementController;
-use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\OrderTrackingController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
@@ -27,6 +27,14 @@ Route::middleware('auth')->group(function () {
     Route::get('/user-management/{user}/edit', [UserManagementController::class, 'edit'])->name('users.edit');
     Route::patch('/user-management/{user}', [UserManagementController::class, 'update'])->name('users.update');
     Route::delete('/user-management/{user}', [UserManagementController::class, 'destroy'])->name('users.destroy');
+
+    // Order Tracking Routes
+    Route::get('/order-tracking', [OrderTrackingController::class, 'index'])->name('order-tracking');
+    Route::get('/order-tracking/{order}', [OrderTrackingController::class, 'show'])->name('order.show');
+    Route::get('/order-tracking/{order}/edit', [OrderTrackingController::class, 'edit'])->name('order.edit');
+    Route::post('/order-tracking', [OrderTrackingController::class, 'store'])->name('order.store');
+    Route::patch('/order-tracking/{order}', [OrderTrackingController::class, 'update'])->name('order.update');
+    Route::delete('/order-tracking/{order}', [OrderTrackingController::class, 'destroy'])->name('order.destroy');
 });
 
 Route::post('login', [LoginController::class, 'login'])->name('login');
