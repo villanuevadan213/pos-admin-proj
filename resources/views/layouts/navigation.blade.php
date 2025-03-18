@@ -20,6 +20,11 @@
                         {{ __('User Management') }}
                     </x-nav-link>
 
+                    <!-- Inventory Management Link -->
+                    <x-nav-link :href="route('inventory-management')" :active="request()->routeIs('inventory-management')">
+                        {{ __('Inventory Management') }}
+                    </x-nav-link>
+
                     <!-- Order Tracking Link -->
                     <x-nav-link :href="route('order-tracking')" :active="request()->routeIs('order-tracking')">
                         {{ __('Order Tracking') }}
@@ -82,6 +87,10 @@
             <!-- Responsive User Management Link -->
             <x-responsive-nav-link :href="route('user-management')" :active="request()->routeIs('user-management')">
                 {{ __('User Management') }}
+            </x-responsive-nav-link>
+            <!-- Responsive Inventory Management Link -->
+            <x-responsive-nav-link :href="route('inventory-management')" :active="request()->routeIs('inventory-management')">
+                {{ __('Inventory Management') }}
             </x-responsive-nav-link>
             <!-- Responsive Order Tracking Link -->
             <x-responsive-nav-link :href="route('order-tracking')" :active="request()->routeIs('order-tracking')">

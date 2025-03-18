@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserManagementController;
 use App\Http\Controllers\OrderTrackingController;
+use App\Http\Controllers\InventoryManagementController; // Add this line
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
@@ -35,6 +36,14 @@ Route::middleware('auth')->group(function () {
     Route::post('/order-tracking', [OrderTrackingController::class, 'store'])->name('order.store');
     Route::patch('/order-tracking/{order}', [OrderTrackingController::class, 'update'])->name('order.update');
     Route::delete('/order-tracking/{order}', [OrderTrackingController::class, 'destroy'])->name('order.destroy');
+
+    // Inventory Management Routes
+    Route::get('/inventory-management', [InventoryManagementController::class, 'index'])->name('inventory-management');
+    Route::get('/inventory-management/create', [InventoryManagementController::class, 'create'])->name('inventory.create');
+    Route::post('/inventory-management', [InventoryManagementController::class, 'store'])->name('inventory.store');
+    Route::get('/inventory-management/{item}/edit', [InventoryManagementController::class, 'edit'])->name('inventory.edit');
+    Route::patch('/inventory-management/{item}', [InventoryManagementController::class, 'update'])->name('inventory.update');
+    Route::delete('/inventory-management/{item}', [InventoryManagementController::class, 'destroy'])->name('inventory.destroy');
 });
 
 Route::post('login', [LoginController::class, 'login'])->name('login');
