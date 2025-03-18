@@ -5,6 +5,8 @@
         </h2>
     </x-slot>
 
+    <link rel="stylesheet" href="{{ asset('common/css/order-tracking.css') }}">
+
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
@@ -60,6 +62,10 @@
                                     </th>
                                     <th scope="col"
                                         class="p-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Status
+                                    </th>
+                                    <th scope="col"
+                                        class="p-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                         Action
                                     </th>
                                 </tr>
@@ -96,14 +102,21 @@
                                             <td class="p-3 whitespace-nowrap text-sm text-gray-500">{{ $item->updated_at }}
                                             </td>
                                             <td class="p-3 whitespace-nowrap text-sm text-gray-500">{{ $item->notes }}</td>
+                                            <td class="p-3 whitespace-nowrap text-sm text-gray-500">
+                                                @if ($item->quantity <= 5)
+                                                    <span class="alert alert-lowStock font-semibold">Low-stock</span>
+                                                @else
+                                                    <span class="alert alert-inStock font-semibold">In Stock</span>
+                                                @endif
+                                            </td>
                                             <td class="p-3 whitespace-nowrap text-sm text-gray-500 text-center">
                                                 <a href="{{ route('inventory.edit', $item->id) }}"
-                                                    class="text-blue-500 hover:underline">Update</a>
+                                                    class="h-8 bg-blue-500 hover:bg-blue-700 text-white font-bold p-2 rounded">Update</a>
                                                 <form action="{{ route('inventory.destroy', $item->id) }}" method="POST"
-                                                    class="inline-block">
+                                                    class="inline-block h-8 bg-red-500 hover:bg-red-700 text-white font-bold p-2 rounded">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="text-red-500 hover:underline ml-2"
+                                                    <button type="submit"
                                                         onclick="return confirm('Are you sure you want to delete this item?')">Delete</button>
                                                 </form>
                                             </td>

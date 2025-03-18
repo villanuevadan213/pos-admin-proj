@@ -110,7 +110,13 @@ class InventoryManagementController extends Controller
             'notes' => 'nullable|string',
         ]);
 
+        // Generate item_code if it is NULL or empty
+        if (empty($item->item_code)) {
+            $itemCode = 'ITEM' . strtoupper(uniqid());
+        }
+
         $item->update([
+            'item_code' => $itemCode,
             'item_name' => $request->name,
             'category' => $request->category,
             'quantity' => $request->quantity,

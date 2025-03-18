@@ -4,7 +4,8 @@
     border-radius: 0.5rem;
 }
 
-.alert-Completed {
+.alert-Completed,
+.alert-inStock {
     background-color: #28a745;
 }
 
@@ -12,7 +13,8 @@
     background-color: #007bff;
 }
 
-.alert-Pending {
+.alert-Pending,
+.alert-lowStock {
     background-color: #ffc107;
 }
 
