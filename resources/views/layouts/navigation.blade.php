@@ -25,6 +25,10 @@
                         {{ __('Inventory Management') }}
                     </x-nav-link>
 
+                    <x-nav-link :href="route('pos')" :active="request()->routeIs('pos')">
+                        {{ __('POS') }}
+                    </x-nav-link>
+
                     <!-- Order Tracking Link -->
                     <x-nav-link :href="route('order-tracking')" :active="request()->routeIs('order-tracking')">
                         {{ __('Order Tracking') }}
@@ -91,6 +95,9 @@
             <!-- Responsive Inventory Management Link -->
             <x-responsive-nav-link :href="route('inventory-management')" :active="request()->routeIs('inventory-management')">
                 {{ __('Inventory Management') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('pos')" :active="request()->routeIs('pos')">
+                {{ __('POS') }}
             </x-responsive-nav-link>
             <!-- Responsive Order Tracking Link -->
             <x-responsive-nav-link :href="route('order-tracking')" :active="request()->routeIs('order-tracking')">

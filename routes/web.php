@@ -3,7 +3,8 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserManagementController;
 use App\Http\Controllers\OrderTrackingController;
-use App\Http\Controllers\InventoryManagementController; // Add this line
+use App\Http\Controllers\InventoryManagementController;
+use App\Http\Controllers\POSController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
@@ -44,6 +45,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/inventory-management/{item}/edit', [InventoryManagementController::class, 'edit'])->name('inventory.edit');
     Route::patch('/inventory-management/{item}', [InventoryManagementController::class, 'update'])->name('inventory.update');
     Route::delete('/inventory-management/{item}', [InventoryManagementController::class, 'destroy'])->name('inventory.destroy');
+
+    // POS Routes
+    Route::get('/pos', [POSController::class, 'index'])->name('pos');
+    Route::post('/pos/checkout', [POSController::class, 'checkout'])->name('pos.checkout');
+    Route::get('/pos/checkout', [POSController::class, 'showCheckout'])->name('pos.checkout.show');
+    Route::get('/pos/history', [POSController::class, 'history'])->name('pos.history');
+    Route::post('/pos/confirm-checkout', [POSController::class, 'confirmCheckout'])->name('pos.confirm_checkout');
 });
 
 Route::post('login', [LoginController::class, 'login'])->name('login');

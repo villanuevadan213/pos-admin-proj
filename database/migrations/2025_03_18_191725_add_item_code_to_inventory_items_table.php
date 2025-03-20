@@ -14,8 +14,11 @@ class AddItemCodeToInventoryItemsTable extends Migration
     public function up()
     {
         Schema::table('inventory_items', function (Blueprint $table) {
-            $table->string('item_code')->unique()->after('id'); // Add item_code column
+            if (!Schema::hasColumn('inventory_items', 'item_code')) {
+                $table->string('item_code')->unique()->after('id');
+            }
         });
+        
     }
 
     /**
