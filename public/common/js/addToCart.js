@@ -1,5 +1,7 @@
 let cart = {};
 let cartTotal = 0;
+let discountType = 'percentage';
+let discountValue = 0;
 
 function addToCart(id, name, price, maxQuantity) {
     const quantityInput = document.getElementById(`quantity-${id}`);
@@ -55,8 +57,8 @@ function renderCart() {
         cartItemsContainer.appendChild(itemDiv);
     });
 
-    // Update cart total
-    cartTotalElement.textContent = cartTotal.toFixed(2);
+    // Update cart total with discount
+    applyDiscount();
 
     // Update hidden input for form submission
     cartDataInput.value = JSON.stringify(cart);
@@ -71,4 +73,30 @@ function clearCart() {
     document.getElementById('cart-items').innerHTML = '<p class="text-sm text-gray-500 italic">Your cart is empty.</p>';
     document.getElementById('cart-total').innerText = '0.00';
     document.getElementById('cart-data').value = '';
+}
+
+function applyDiscount() {
+    const cartTotalElement = document.getElementById('cart-total');
+
+    let total = Object.values(cart).reduce((sum, item) => sum + item.price * item.quantity, 0);
+
+    if (discountType === 'percentage') {
+        total -= (total * (discountValue / 100));
+    } else if (discountType === 'fixed') {
+        total -= discountValue;
+    } else if (discountType === 'volume') {
+        // Add logic for volume-based discounts if needed
+    }
+
+    // Prevent total from going below zero
+    total = Math.max(total, 0);
+
+    // Update cart total
+    cartTotalElement.textContent = total.toFixed(2);
+}
+
+function updateDiscount(type, value) {
+    discountType = type;
+    discountValue = parseFloat(value) || 0; // Default to 0 if value is invalid
+    applyDiscount();
 }

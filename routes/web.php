@@ -49,9 +49,6 @@ Route::middleware('auth')->group(function () {
     // POS Routes
     Route::get('/pos', [POSController::class, 'index'])->name('pos');
     Route::post('/pos/checkout', [POSController::class, 'checkout'])->name('pos.checkout');
-    Route::get('/pos/checkout', [POSController::class, 'showCheckout'])->name('pos.checkout.show');
-    Route::get('/pos/history', [POSController::class, 'history'])->name('pos.history');
-    Route::post('/pos/confirm-checkout', [POSController::class, 'confirmCheckout'])->name('pos.confirm_checkout');
 });
 
 Route::post('login', [LoginController::class, 'login'])->name('login');

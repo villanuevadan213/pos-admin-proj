@@ -18,10 +18,24 @@ class OrderTrackingController extends Controller
     {
         // $orders = Order::all();
 
-        $orders = DB::table('users')
-            ->join('orders', 'users.id', '=', 'orders.user_id')
-            ->select('users.id', 'users.name', 'users.email', 'orders.order_number', 'orders.total_amount', 'orders.status', 'orders.created_at')
-            ->get();
+        $orders = DB::table('transactions')
+            ->join('transaction_items', function ($join) {
+                $join->on('transactions.id', '=', 'transaction_items.transaction_id')
+                    ->on('transactions.order_id', '=', 'transaction_items.order_id');
+            })
+            ->select(
+                'transactions.order_id',
+                'transactions.user_id',
+                'transactions.total',
+                'transactions.created_at as transaction_created_at',
+                'transaction_items.item_code',
+                'transaction_items.item_name',
+                'transaction_items.quantity',
+                'transaction_items.price',
+                'transaction_items.total_value'
+            )
+            ->get()
+            ->groupBy('order_id'); // Group items by order_id
 
         return view('order-tracking.index', compact('orders'));
     }

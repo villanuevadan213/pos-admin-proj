@@ -45,8 +45,6 @@
                         </div>
                     @endforeach
                 </div>
-
-
                 <!-- Cart Summary -->
                 <div class="w-full lg:w-1/3 bg-white shadow rounded-lg p-4 flex flex-col space-y-4">
                     <h3 class="text-lg font-bold text-gray-800">Cart Summary</h3>
@@ -56,14 +54,38 @@
                     <div>
                         <h4 class="text-lg font-bold text-gray-800">Total: ₱<span id="cart-total">0.00</span></h4>
                     </div>
+                    <!-- Discount Section -->
+                    <div class="space-y-4">
+                        <h3 class="text-lg font-bold text-gray-800">Discount</h3>
+                        <div>
+                            <label for="discount-type" class="block text-sm font-medium text-gray-700">Discount
+                                Type</label>
+                            <select id="discount-type" name="discount_type"
+                                onchange="updateDiscount(this.value, document.getElementById('discount-value').value)"
+                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                                <option value="percentage">Percentage</option>
+                                <option value="fixed">Fixed-Price</option>
+                                <option value="volume">Volume</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="discount-value" class="block text-sm font-medium text-gray-700">Discount
+                                Value</label>
+                            <input type="number" id="discount-value" name="discount_value" min="0" value="0"
+                                onchange="updateDiscount(document.getElementById('discount-type').value, this.value)"
+                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                        </div>
+                    </div>
                     <!-- Clear List Button -->
                     <button onclick="clearCart()"
                         class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded w-full">
                         Clear List
                     </button>
-                    <form id="checkout-form" method="POST" action="{{ route('pos.confirm_checkout') }}">
+                    <form id="checkout-form" method="POST" action="{{ route('pos.checkout') }}">
                         @csrf
                         <input type="hidden" id="cart-data" name="cart" value="">
+                        <input type="hidden" id="discount-type-field" name="discount_type" value="percentage">
+                        <input type="hidden" id="discount-value-field" name="discount_value" value="0">
                         <button type="submit"
                             class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full">
                             Checkout

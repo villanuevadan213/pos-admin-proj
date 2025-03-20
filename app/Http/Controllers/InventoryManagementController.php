@@ -105,30 +105,38 @@ class InventoryManagementController extends Controller
             'category' => 'required|string|max:255',
             'quantity' => 'required|integer',
             'unit_price' => 'required|numeric',
-            'total_value' => 'required|numeric',
             'supplier' => 'required|string|max:255',
             'notes' => 'nullable|string',
         ]);
-
-        // Generate item_code if it is NULL or empty
+    
+        // Check the existing item_code condition
         if (empty($item->item_code)) {
+            // If item_code is NULL or empty, generate a new item_code
             $itemCode = 'ITEM' . strtoupper(uniqid());
+            $item->item_code = $itemCode;
+        } elseif ($item->exists && $item->item_code === $item->item_code) {
+            // If item_code already exists, update the quantity
+            $item->quantity += $request->quantity;
+            $item->total_value = $item->quantity * $item->unit_price; // Update total value
+        } else {
+            // Otherwise, retain the existing item_code
+            $itemCode = $item->item_code;
         }
-
+    
+        // Update the item with new or retained values
         $item->update([
-            'item_code' => $itemCode,
+            'item_code' => $item->item_code,
             'item_name' => $request->name,
             'category' => $request->category,
-            'quantity' => $request->quantity,
+            'quantity' => $item->quantity, // Updated or retained quantity
             'unit_price' => $request->unit_price,
-            'total_value' => $request->total_value,
+            'total_value' => $item->quantity * $request->unit_price,
             'supplier' => $request->supplier,
             'notes' => $request->notes,
         ]);
-
+    
         return redirect()->route('inventory-management')->with('success', 'Inventory item updated successfully.');
     }
-
     /**
      * Remove the specified inventory item from storage.
      *
