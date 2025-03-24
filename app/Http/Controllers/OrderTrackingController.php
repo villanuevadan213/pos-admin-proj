@@ -46,8 +46,27 @@ class OrderTrackingController extends Controller
      * @param  \App\Models\Order  $order
      * @return \Illuminate\Http\Response
      */
-    public function show(Order $order)
+    public function show($order_id)
     {
+        $order = DB::table('transactions')
+            ->join('transaction_items', function ($join) {
+                $join->on('transactions.id', '=', 'transaction_items.transaction_id')
+                    ->on('transactions.order_id', '=', 'transaction_items.order_id');
+            })
+            ->where('transactions.order_id', $order_id)
+            ->select(
+                'transactions.order_id',
+                'transactions.user_id',
+                'transactions.total',
+                'transactions.created_at as transaction_created_at',
+                'transaction_items.item_code',
+                'transaction_items.item_name',
+                'transaction_items.quantity',
+                'transaction_items.price',
+                'transaction_items.total_value'
+            )
+            ->get();
+
         return view('order-tracking.show', compact('order'));
     }
 
@@ -68,10 +87,27 @@ class OrderTrackingController extends Controller
      * @param  \App\Models\Order  $order
      * @return \Illuminate\Http\Response
      */
-    public function edit(Order $order)
+    public function edit($order_id)
     {
-        return view('order-tracking.edit', compact('order'));
+        $order = DB::table('transactions')
+            ->join('transaction_items', function ($join) {
+                $join->on('transactions.id', '=', 'transaction_items.transaction_id')
+                    ->on('transactions.order_id', '=', 'transaction_items.order_id');
+            })
+            ->where('transactions.order_id', $order_id)
+            ->select(
+                'transactions.order_id',
+                'transactions.user_id',
+                'transactions.total',
+                'transaction_items.item_name',
+                'transaction_items.quantity',
+                'transaction_items.price'
+            )
+            ->get();
+    
+        return view('order-tracking.edit', compact('order', 'order_id')); // Pass $order_id explicitly
     }
+    
     /**
      * Update the specified order in storage.
      *

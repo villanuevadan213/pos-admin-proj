@@ -44,7 +44,7 @@
                 <!-- Cart Summary -->
                 <div class="w-full lg:w-1/3 bg-white shadow rounded-lg p-4 flex flex-col space-y-4">
                     <h3 class="text-lg font-bold text-gray-800">Cart Summary</h3>
-                    <div id="cart-items" class="space-y-4 flex-grow">
+                    <div id="cart-items" class="space-y-4 overflow-auto flex-grow">
                         <table class="w-full border-collapse border border-gray-200">
                             <thead>
                                 <tr class="bg-gray-100 border-b border-gray-300">

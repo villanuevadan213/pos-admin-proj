@@ -32,11 +32,10 @@ Route::middleware('auth')->group(function () {
 
     // Order Tracking Routes
     Route::get('/order-tracking', [OrderTrackingController::class, 'index'])->name('order-tracking');
-    Route::get('/order-tracking/{order}', [OrderTrackingController::class, 'show'])->name('order.show');
-    Route::get('/order-tracking/{order}/edit', [OrderTrackingController::class, 'edit'])->name('order.edit');
-    Route::post('/order-tracking', [OrderTrackingController::class, 'store'])->name('order.store');
-    Route::patch('/order-tracking/{order}', [OrderTrackingController::class, 'update'])->name('order.update');
-    Route::delete('/order-tracking/{order}', [OrderTrackingController::class, 'destroy'])->name('order.destroy');
+    Route::get('/order-tracking/{order_id}', [OrderTrackingController::class, 'show'])->name('order-tracking.show');
+    Route::delete('/order-tracking/{order_id}', [OrderTrackingController::class, 'destroy'])->name('order-tracking.destroy');
+    Route::get('/order-tracking/{order_id}/edit', [OrderTrackingController::class, 'edit'])->name('order-tracking.edit');
+    Route::put('/order-tracking/{order_id}', [OrderTrackingController::class, 'update'])->name('order-tracking.update');
 
     // Inventory Management Routes
     Route::get('/inventory-management', [InventoryManagementController::class, 'index'])->name('inventory-management');
