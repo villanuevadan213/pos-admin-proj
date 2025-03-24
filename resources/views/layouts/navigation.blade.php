@@ -31,7 +31,7 @@
 
                     <!-- Order Tracking Link -->
                     <x-nav-link :href="route('order-tracking')" :active="request()->routeIs('order-tracking')">
-                        {{ __('Order Tracking') }}
+                        {{ __('Sales Report') }}
                     </x-nav-link>
                 </div>
             </div>
@@ -101,7 +101,7 @@
             </x-responsive-nav-link>
             <!-- Responsive Order Tracking Link -->
             <x-responsive-nav-link :href="route('order-tracking')" :active="request()->routeIs('order-tracking')">
-                {{ __('Order Tracking') }}
+                {{ __('Sales Report') }}
             </x-responsive-nav-link>
         </div>
 
