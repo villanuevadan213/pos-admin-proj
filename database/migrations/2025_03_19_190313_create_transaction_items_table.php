@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('transaction_items', function (Blueprint $table) {
             $table->id();
             $table->foreignId('transaction_id')->constrained()->onDelete('cascade');
+            $table->string('order_id');
             $table->foreignId('inventory_item_id')->constrained()->onDelete('cascade');
             $table->string('item_code');
             $table->string('item_name');
