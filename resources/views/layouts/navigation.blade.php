@@ -20,10 +20,12 @@
                         {{ __('User Management') }}
                     </x-nav-link>
 
+                    @if(auth()->user()->role == 'Admin' || auth()->user()->position == 'Manager')
                     <!-- Inventory Management Link -->
                     <x-nav-link :href="route('inventory-management')" :active="request()->routeIs('inventory-management')">
                         {{ __('Inventory Management') }}
                     </x-nav-link>
+                    @endif
 
                     <x-nav-link :href="route('pos')" :active="request()->routeIs('pos')">
                         {{ __('POS') }}
@@ -92,10 +94,12 @@
             <x-responsive-nav-link :href="route('user-management')" :active="request()->routeIs('user-management')">
                 {{ __('User Management') }}
             </x-responsive-nav-link>
+            @if(auth()->user()->role == 'Admin' || auth()->user()->position == 'Manager')
             <!-- Responsive Inventory Management Link -->
             <x-responsive-nav-link :href="route('inventory-management')" :active="request()->routeIs('inventory-management')">
                 {{ __('Inventory Management') }}
             </x-responsive-nav-link>
+            @endif
             <x-responsive-nav-link :href="route('pos')" :active="request()->routeIs('pos')">
                 {{ __('POS') }}
             </x-responsive-nav-link>
