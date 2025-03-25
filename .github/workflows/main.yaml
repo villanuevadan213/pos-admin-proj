@@ -2,7 +2,7 @@ name: DEPLOY TO CPANEL
 on:
   push:
     branches:
-      - main
+      - master
 jobs:
   web-deploy:
     name: Deploy
