@@ -19,32 +19,9 @@
                 </div>
             @endif
 
-            <div class="flex flex-col lg:flex-row space-y-6 lg:space-y-0 lg:space-x-6">
-                <!-- Product Cards -->
-                <div class="grid grid-cols-2 md:grid-cols-3 gap-4 flex-grow">
-                    @foreach ($inventoryItems as $item)
-                                    <div role="button" class="p-4 bg-white shadow rounded-lg flex flex-col space-y-4 h-full"
-                                        onclick="addToCart({{ $item->id }}, '{{ $item->item_name }}', {{ $item->unit_price }}, {{ $item->quantity }})">
-                                        <img src="{{ file_exists(public_path('common/images/' . $item->item_code . '.jpg'))
-                        ? asset('common/images/' . $item->item_code . '.jpg')
-                        : asset('common/images/No_Image_Available.jpg') }}" alt="Logo">
-                                        <h3 class="text-lg font-bold text-gray-800">{{ $item->item_name }}</h3>
-                                        <p class="text-sm text-gray-500">Code: {{ $item->item_code }}</p>
-                                        <p class="text-sm text-gray-500">Price: ₱{{ $item->unit_price }}</p>
-                                        <p class="text-sm text-gray-500">Available: {{ $item->quantity }}</p>
-                                        <!-- Spacer to push content above -->
-                                        <div class="flex-grow"></div>
-                                        <!-- Quantity input and Add button at the bottom -->
-                                        <div class="w-full hidden">
-                                            <input type="number" id="quantity-{{ $item->id }}" min="1" max="{{ $item->quantity }}"
-                                                class="border rounded px-2 py-1 w-full text-center mb-2" placeholder="Quantity"
-                                                value="1">
-                                        </div>
-                                    </div>
-                    @endforeach
-                </div>
+            <div class="flex flex-col space-y-6">
                 <!-- Cart Summary -->
-                <div class="w-full lg:w-1/3 bg-white shadow rounded-lg p-4 flex flex-col space-y-4">
+                <div class="w-full bg-white shadow rounded-lg p-4 flex flex-col space-y-4">
                     <h3 class="text-lg font-bold text-gray-800">Cart Summary</h3>
                     <div id="cart-items" class="space-y-4 overflow-auto flex-grow">
                         <table class="w-full border-collapse border border-gray-200">
@@ -110,6 +87,30 @@
                             Checkout
                         </button>
                     </form>
+                </div>
+
+                <!-- Product Cards -->
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-4 flex-grow">
+                    @foreach ($inventoryItems as $item)
+                                    <div role="button" class="p-4 bg-white shadow rounded-lg flex flex-col space-y-4 h-full"
+                                        onclick="addToCart({{ $item->id }}, '{{ $item->item_name }}', {{ $item->unit_price }}, {{ $item->quantity }})">
+                                        <img src="{{ file_exists(public_path('common/images/' . $item->item_code . '.jpg'))
+                        ? asset('common/images/' . $item->item_code . '.jpg')
+                        : asset('common/images/No_Image_Available.jpg') }}" alt="Logo">
+                                        <h3 class="text-lg font-bold text-gray-800">{{ $item->item_name }}</h3>
+                                        <p class="text-sm text-gray-500">Code: {{ $item->item_code }}</p>
+                                        <p class="text-sm text-gray-500">Price: ₱{{ $item->unit_price }}</p>
+                                        <p class="text-sm text-gray-500">Available: {{ $item->quantity }}</p>
+                                        <!-- Spacer to push content above -->
+                                        <div class="flex-grow"></div>
+                                        <!-- Quantity input and Add button at the bottom -->
+                                        <div class="w-full hidden">
+                                            <input type="number" id="quantity-{{ $item->id }}" min="1" max="{{ $item->quantity }}"
+                                                class="border rounded px-2 py-1 w-full text-center mb-2" placeholder="Quantity"
+                                                value="1">
+                                        </div>
+                                    </div>
+                    @endforeach
                 </div>
             </div>
         </div>
