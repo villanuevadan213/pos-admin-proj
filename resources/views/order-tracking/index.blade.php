@@ -71,9 +71,8 @@
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             <div class="text-sm font-medium flex justify-center gap-2 text-center">
-                                                {{-- <a href="{{ route('order-tracking.show', $order_id) }}"
+                                                <a href="{{ route('order-tracking.show', $order_id) }}"
                                                     class="h-8 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">View</a>
-                                                --}}
                                                 <form action="{{ route('order-tracking.destroy', $order_id) }}" method="POST">
                                                     @csrf
                                                     @method('DELETE')

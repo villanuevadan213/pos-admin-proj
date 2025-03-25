@@ -44,11 +44,11 @@
                     </div>
 
                     <!-- Edit and Delete Actions -->
-                    <div class="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <a href="{{ route('order-tracking.edit', $order->first()->order_id) }}"
+                    <div class="mt-6">
+                        {{-- <a href="{{ route('order-tracking.edit', $order->first()->order_id) }}"
                             class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-center">
                             Edit Order
-                        </a>
+                        </a> --}}
                         <form action="{{ route('order-tracking.destroy', $order->first()->order_id) }}" method="POST"
                             onsubmit="return confirm('Are you sure you want to delete this order?')">
                             @csrf
