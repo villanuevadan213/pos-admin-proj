@@ -12,26 +12,53 @@
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                 <div class="p-6 text-gray-900">
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <!-- Total Users -->
                         <div class="bg-neutral-200 p-6 rounded-lg shadow-lg">
-                            <h2 class="text-2xl font-bold">Earnings</h2>
-                            <p class="text-4xl mt-4">$628</p>
+                            <h2 class="text-2xl font-bold">Total Users</h2>
+                            <p class="text-4xl mt-4">{{ $totalUsers }}</p>
                         </div>
+
+                        <!-- Inventory -->
                         <div class="bg-neutral-200 p-6 rounded-lg shadow-lg">
-                            <h2 class="text-2xl font-bold">Share</h2>
-                            <p class="text-4xl mt-4">2434</p>
+                            <h2 class="text-2xl font-bold">Inventory Total Items</h2>
+                            <p class="text-4xl mt-4">{{ $inventoryItems }}</p>
                         </div>
+
                         <div class="bg-neutral-200 p-6 rounded-lg shadow-lg">
-                            <h2 class="text-2xl font-bold">Likes</h2>
-                            <p class="text-4xl mt-4">1259</p>
+                            <h2 class="text-2xl font-bold">Overall Item Total</h2>
+                            <p class="text-4xl mt-4">{{ $inventoryOverallTotal }}</p>
                         </div>
+
+                        <!-- Recent Transactions -->
                         <div class="bg-neutral-200 p-6 rounded-lg shadow-lg">
-                            <h2 class="text-2xl font-bold">Rating</h2>
-                            <p class="text-4xl mt-4">8.5</p>
+                            <h2 class="text-2xl font-bold">Recent Transaction Total</h2>
+                            <p class="text-4xl mt-4">₱ {{ number_format($recentTransactionTotal, 2)}}</p>
                         </div>
+
+                        <!-- Recent Activity Logs -->
                         <div class="bg-neutral-50 p-6 rounded-lg shadow-lg col-span-2">
-                            <h2 class="text-2xl font-bold">Result</h2>
+                            <h2 class="text-2xl font-bold">Recent 5 Users Activity Logs</h2>
                             <div class="mt-4">
-                                <canvas id="resultChart"></canvas>
+                                <table class="table-auto w-full border border-gray-300">
+                                    <thead>
+                                        <tr class="bg-gray-100 text-left">
+                                            <th class="px-4 py-2 border">Name</th>
+                                            <th class="px-4 py-2 border">Login At</th>
+                                            <th class="px-4 py-2 border">Logout At</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($recentActivityLogs as $log)
+                                            <tr>
+                                                <td class="px-4 py-2 border">{{ $log['name'] }}</td>
+                                                <td class="px-4 py-2 border">{{ $log['login_at'] }}</td>
+                                                <td class="px-4 py-2 border">
+                                                    {{ $log['logout_at'] ?? 'N/A' }}
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
