@@ -14,7 +14,7 @@ class InventoryManagementController extends Controller
      */
     public function index()
     {
-        $items = InventoryItem::all();
+        $items = InventoryItem::paginate(10, ['*'], 'itemsPage');
         return view('inventory-management.index', compact('items'));
     }
 

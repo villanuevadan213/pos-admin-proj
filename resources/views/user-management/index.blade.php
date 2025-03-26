@@ -5,6 +5,8 @@
         </h2>
     </x-slot>
 
+    <link rel="stylesheet" href="{{ asset('common/css/pagination.css') }}">
+
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             @auth
@@ -77,26 +79,33 @@
                                 </tbody>
                             </table>
                         </div>
+                        <!-- Pagination Links -->
+                        <div class="mt-4">
+                            {{ $users->links() }}
+                        </div>
                     </div>
                 @endif
             @endauth
 
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-6 mt-4">
                 <h3 class="text-lg leading-6 font-medium text-gray-900">User Activity Logs</h3>
-                <div class="overflow-x-auto mt-4">
+                <div class="overflow-auto mt-4">
                     <table class="min-w-full divide-y divide-gray-200">
                         <thead class="bg-gray-50">
                             <tr>
                                 <th scope="col"
-                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                                    style="position: sticky; top: 0; background-color: #f9fafb; z-index: 1;">
                                     User
                                 </th>
                                 <th scope="col"
-                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                                    style="position: sticky; top: 0; background-color: #f9fafb; z-index: 1;">
                                     Login Time
                                 </th>
                                 <th scope="col"
-                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                                    style="position: sticky; top: 0; background-color: #f9fafb; z-index: 1;">
                                     Logout Time
                                 </th>
                             </tr>
@@ -117,6 +126,10 @@
                             @endforeach
                         </tbody>
                     </table>
+                </div>
+                <!-- Pagination Links -->
+                <div class="mt-4">
+                    {{ $userActivities->links() }}
                 </div>
             </div>
         </div>

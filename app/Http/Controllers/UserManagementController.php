@@ -13,17 +13,21 @@ class UserManagementController extends Controller
     public function index()
     {
         // Fetch all users except the currently logged-in user
-        $users = User::where('id', '!=', Auth::id())->get();
+        $users = User::where('id', '!=', Auth::id())
+                 ->orderByDesc('id')
+                 ->paginate(10, ['*'], 'usersPage'); // Custom query parameter: 'usersPage'
 
         // Fetch all user activities
         $userActivities = DB::table('users')
-            ->join('user_activities', 'users.id', '=', 'user_activities.user_id')
-            ->select('users.id', 'users.name', 'users.email', 'user_activities.login_at', 'user_activities.logout_at')
-            ->orderByDesc(DB::raw('COALESCE(user_activities.logout_at, user_activities.login_at)'))
-            ->get()
-            ->map(function ($user) {
-                return (array) $user;
-            });
+                ->join('user_activities', 'users.id', '=', 'user_activities.user_id')
+                ->select('users.id', 'users.name', 'users.email', 'user_activities.login_at', 'user_activities.logout_at')
+                ->orderByDesc(DB::raw('COALESCE(user_activities.logout_at, user_activities.login_at)'))
+                ->paginate(10, ['*'], 'activitiesPage'); // Custom query parameter: 'activitiesPage'
+
+        // Apply the mapping to the items while keeping pagination intact
+        $userActivities->getCollection()->transform(function ($user) {
+            return (array) $user;
+        });
 
         // Pass the users and user activities to the view
         return view('user-management.index', compact('users', 'userActivities'));

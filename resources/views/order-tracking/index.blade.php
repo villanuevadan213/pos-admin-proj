@@ -39,53 +39,46 @@
                             </tr>
                         </thead>
                         <tbody class="bg-white divide-y divide-gray-200 text-center">
-                            @if ($orders->isEmpty())
+                            @forelse ($orders as $order)
+                                <tr class="{{ $loop->odd ? 'bg-gray-100' : 'bg-white' }}">
+                                    <td class="px-6 py-4 whitespace-nowrap">{{ $order->order_id }}</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">{{ $order->user_id }}</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right">{{ $order->quantity }}</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-right">
+                                        ₱{{ number_format($order->total_value, 2) }}</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        {{ \Carbon\Carbon::parse($order->transaction_created_at)->format('Y-m-d') }}
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-left">
+                                        <strong>{{ $order->item_name }}</strong>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="text-sm font-medium flex justify-center gap-2 text-center">
+                                            <a href="{{ route('order-tracking.show', $order->order_id) }}"
+                                                class="h-8 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">View</a>
+                                            <form action="{{ route('order-tracking.destroy', $order->order_id) }}"
+                                                method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit"
+                                                    class="h-8 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Delete</button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @empty
                                 <tr>
-                                    <td colspan="7"
-                                        class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center font-bold">
+                                    <td colspan="7" class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 font-bold">
                                         No Available Data
                                     </td>
                                 </tr>
-                            @else
-                                @foreach ($orders as $order_id => $items)
-                                    <tr class="{{ $loop->odd ? 'bg-gray-100' : 'bg-white' }}">
-                                        <td class="px-6 py-4 whitespace-nowrap">{{ $order_id }}</td>
-                                        <td class="px-6 py-4 whitespace-nowrap">{{ $items->first()->user_id }}</td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-right">{{ $items->sum('quantity') }}</td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-right">
-                                            ₱{{ number_format($items->sum('total_value'), 2) }}</td>
-                                        <td class="px-6 py-4 whitespace-nowrap created-date">
-                                            {{ \Carbon\Carbon::parse($items->first()->transaction_created_at)->format('Y-m-d') }}
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                            <ul class="text-left">
-                                                @foreach ($items as $item)
-                                                    <li>
-                                                        <strong>{{ $item->item_name }}</strong> -
-                                                        Quantity: {{ $item->quantity }} |
-                                                        Price: ₱{{ number_format($item->price, 2) }} |
-                                                        Total: ₱{{ number_format($item->total_value, 2) }}
-                                                    </li>
-                                                @endforeach
-                                            </ul>
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                            <div class="text-sm font-medium flex justify-center gap-2 text-center">
-                                                <a href="{{ route('order-tracking.show', $order_id) }}"
-                                                    class="h-8 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">View</a>
-                                                <form action="{{ route('order-tracking.destroy', $order_id) }}" method="POST">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit"
-                                                        class="h-8 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Delete</button>
-                                                </form>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            @endif
+                            @endforelse
                         </tbody>
                     </table>
+                </div>
+                <!-- Pagination Links -->
+                <div class="mt-4">
+                    {{ $orders->links() }}
                 </div>
                 <div id="total-sales"
                     class="bg-gray-100 px-6 py-3 mt-2 text-lg font-semibold text-gray-800 flex justify-between">

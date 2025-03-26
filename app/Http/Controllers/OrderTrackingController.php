@@ -16,12 +16,10 @@ class OrderTrackingController extends Controller
      */
     public function index()
     {
-        // $orders = Order::all();
-
         $orders = DB::table('transactions')
             ->join('transaction_items', function ($join) {
                 $join->on('transactions.id', '=', 'transaction_items.transaction_id')
-                    ->on('transactions.order_id', '=', 'transaction_items.order_id');
+                     ->on('transactions.order_id', '=', 'transaction_items.order_id');
             })
             ->select(
                 'transactions.order_id',
@@ -34,9 +32,10 @@ class OrderTrackingController extends Controller
                 'transaction_items.price',
                 'transaction_items.total_value'
             )
-            ->get()
-            ->groupBy('order_id'); // Group items by order_id
-
+            ->orderBy('transactions.created_at', 'desc') // Sort by creation date
+            ->paginate(10, ['*'], 'ordersPage'); // Add pagination (10 records per page)
+    
+        // Return paginated data to the view
         return view('order-tracking.index', compact('orders'));
     }
 
