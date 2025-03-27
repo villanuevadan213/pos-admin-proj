@@ -1,0 +1,17 @@
+.alert {
+    padding: 0.5rem;
+    color: white;
+    border-radius: 0.5rem;
+}
+
+.alert-Active {
+    background-color: #28a745;
+}
+
+.alert-Inactive {
+    background-color: #ffc107;
+}
+
+.alert-Blocked {
+    background-color: #000000;
+}

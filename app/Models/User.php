@@ -17,6 +17,7 @@ class User extends Authenticatable
         'password',
         'role',
         'position',
+        'status',
         'last_login_at',
     ];
 
@@ -34,4 +35,21 @@ class User extends Authenticatable
     {
         return $this->hasMany(UserActivity::class);
     }
+
+    /**
+     * Booted method to handle status based on last_login_at.
+     */
+    protected static function booted()
+    {
+        static::saving(function ($user) {
+            if (is_null($user->last_login_at)) {
+                $user->status = 'Blocked'; // If last_login_at is null
+            } elseif ($user->last_login_at->lte(now()->subDays(7))) {
+                $user->status = 'Inactive'; // If last_login_at is 7 days ago or more
+            } else {
+                $user->status = 'Active'; // If last_login_at is within the last 7 days
+            }
+        });
+    }
+
 }

@@ -44,6 +44,7 @@ class UserManagementController extends Controller
             'email' => 'required|string|email|max:255|unique:users',
             'role' => 'required|string|in:Admin,User',
             'position' => 'required|string|in:,Cashiers,Managers,Staff',
+            'status' => 'required|string|in:Active,Inactive,Blocked',
         ]);
 
         User::create([
@@ -51,6 +52,7 @@ class UserManagementController extends Controller
             'email' => $request->email,
             'role' => $request->role,
             'position' => $request->position,
+            'status' => $request->status,
             'password' => bcrypt('password'),
         ]);
 
@@ -69,12 +71,14 @@ class UserManagementController extends Controller
             'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
             'role' => 'required|string|in:Admin,User',
             'position' => 'required|string|in:,Cashiers,Managers,Staff',
+            'status' => 'required|string|in:Active,Inactive,Blocked',
         ]);
 
         $user->update([
             'name' => $request->name,
             'email' => $request->email,
             'role' => $request->role,
+            'status' => $request->status,
             'position' => $request->position,
         ]);
 

@@ -2,6 +2,18 @@
     <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
 
+    <!-- Flash Messages -->
+    @if (session('message'))
+        <div class="bg-green-500 text-white font-bold rounded px-4 py-2 mb-4">
+            {{ session('message') }}
+        </div>
+    @endif
+    @if (session('error'))
+        <div class="bg-red-500 text-white font-bold rounded px-4 py-2 mb-4">
+            {{ session('error') }}
+        </div>
+    @endif
+
     <form method="POST" action="{{ route('login') }}">
         @csrf
 

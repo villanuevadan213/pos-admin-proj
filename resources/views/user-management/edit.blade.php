@@ -46,6 +46,18 @@
                             <option value="Staff" {{ $user->position == 'Staff' ? 'selected' : '' }}>Staff</option>
                         </select>
                     </div>
+                    <div class="mb-4">
+                        <label for="status" class="block text-gray-700 text-sm font-bold mb-2">Status:</label>
+                        <select name="status" id="status"
+                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                            <option value="Active" {{ isset($user) && $user->status == 'Active' ? 'selected' : '' }}>
+                                Active</option>
+                            <option value="Active" {{ isset($user) && $user->status == 'Inactive' ? 'selected' : '' }}>
+                                Inactive</option>
+                            <option value="Blocked" {{ isset($user) && $user->status == 'Blocked' ? 'selected' : '' }}>
+                                Blocked</option>
+                        </select>
+                    </div>
                     <div class="flex items-center justify-end">
                         <button type="submit"
                             class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">

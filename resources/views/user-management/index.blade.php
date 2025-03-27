@@ -5,7 +5,7 @@
         </h2>
     </x-slot>
 
-    <link rel="stylesheet" href="{{ asset('common/css/pagination.css') }}">
+    <link rel="stylesheet" href="{{ asset('common/css/user.css') }}">
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -40,6 +40,10 @@
                                         </th>
                                         <th scope="col"
                                             class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            Status
+                                        </th>
+                                        <th scope="col"
+                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                             Actions
                                         </th>
                                     </tr>
@@ -58,6 +62,11 @@
                                             </td>
                                             <td class="px-6 py-4 whitespace-nowrap">
                                                 {{ $user->position }}
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <span class="alert alert-{{ $user->status }}">
+                                                    {{ $user->status }}
+                                                </span>
                                             </td>
                                             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium flex justify-start gap-1">
                                                 <a href="{{ route('users.edit', $user->id) }}"
