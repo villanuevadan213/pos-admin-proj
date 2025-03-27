@@ -50,14 +50,28 @@
                             Edit Order
                         </a> --}}
                         <form action="{{ route('order-tracking.destroy', $order->first()->order_id) }}" method="POST"
-                            onsubmit="return confirm('Are you sure you want to delete this order?')">
+                            id="delete-form-{{ $order->first()->order_id }}">
                             @csrf
                             @method('DELETE')
-                            <button type="submit"
-                                class="w-full bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
-                                Delete Order
-                            </button>
+                            <button type="button"
+                                class="w-full bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+                                onclick="confirmDelete('{{ $order->first()->order_id }}')">Delete Order</button>
                         </form>
+
+                        <script>
+                            function confirmDelete(orderId) {
+                                // Prompt the user for confirmation
+                                const userInput = prompt("To proceed with deletion, please type 'VOID':");
+
+                                if (userInput === "VOID") {
+                                    // If 'VOID' is typed, submit the form
+                                    document.getElementById(`delete-form-${orderId}`).submit();
+                                } else {
+                                    // If user input is incorrect or canceled
+                                    alert("Deletion failed! You must type 'VOID' to delete this order.");
+                                }
+                            }
+                        </script>
                     </div>
                 </div>
             </div>

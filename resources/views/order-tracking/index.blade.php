@@ -57,12 +57,27 @@
                                             <a href="{{ route('order-tracking.show', $order->order_id) }}"
                                                 class="h-8 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">View</a>
                                             <form action="{{ route('order-tracking.destroy', $order->order_id) }}"
-                                                method="POST">
+                                                method="POST" id="delete-form-{{ $order->order_id }}">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit"
-                                                    class="h-8 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Delete</button>
+                                                <button type="button"
+                                                    class="h-8 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+                                                    onclick="confirmDelete('{{ $order->order_id }}')">Delete</button>
                                             </form>
+
+                                            <script>
+                                                function confirmDelete(orderId) {
+                                                    // Display confirmation prompt
+                                                    const userInput = prompt("To proceed with deletion, please type 'VOID':");
+                                                    if (userInput === "VOID") {
+                                                        // Submit the form if input matches "VOID"
+                                                        document.getElementById(`delete-form-${orderId}`).submit();
+                                                    } else {
+                                                        // Show failed deletion message
+                                                        alert("Deletion failed! You did not type 'VOID'.");
+                                                    }
+                                                }
+                                            </script>
                                         </div>
                                     </td>
                                 </tr>

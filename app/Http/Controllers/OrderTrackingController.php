@@ -136,9 +136,17 @@ class OrderTrackingController extends Controller
      * @param  \App\Models\Order  $order
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Order $order)
+    public function destroy($order_id)
     {
-        $order->delete();
+        DB::transaction(function () use ($order_id) {
+            // Delete transaction items first to avoid foreign key constraint issues
+            DB::table('transaction_items')->where('order_id', $order_id)->delete();
+    
+            // Delete the transaction record
+            DB::table('transactions')->where('order_id', $order_id)->delete();
+        });
+    
         return redirect()->route('order-tracking')->with('success', 'Order deleted successfully.');
     }
+
 }
