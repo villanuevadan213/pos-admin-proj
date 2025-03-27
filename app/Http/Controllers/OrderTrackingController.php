@@ -57,7 +57,7 @@ class OrderTrackingController extends Controller
                 'transactions.order_id',
                 'transactions.user_id',
                 'transactions.total',
-                'transactions.created_at as transaction_created_at',
+                DB::raw('DATE_FORMAT(transactions.created_at, "%Y-%m-%d") as transaction_created_at'),
                 'transaction_items.item_code',
                 'transaction_items.item_name',
                 'transaction_items.quantity',

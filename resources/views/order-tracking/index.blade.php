@@ -18,6 +18,15 @@
                         class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
                         onchange="filterByDate()">
                 </div>
+                <!-- Order ID Filter Input -->
+                <div class="mb-4">
+                    <label for="order-id" class="block text-sm font-medium text-gray-700">Filter by Order
+                        Number:</label>
+                    <input type="text" id="order-id" name="order_id" value="{{ request('order_id') }}"
+                        class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                        placeholder="Enter Order Number" oninput="filterByOrderId()">
+                </div>
+                <!-- Orders Table -->
                 <div class="overflow-x-auto">
                     <table class="min-w-full divide-y divide-gray-200" id="order-table">
                         <thead class="bg-gray-50 text-center">
@@ -46,7 +55,7 @@
                                     <td class="px-6 py-4 whitespace-nowrap text-right">{{ $order->quantity }}</td>
                                     <td class="px-6 py-4 whitespace-nowrap text-right">
                                         ₱{{ number_format($order->total_value, 2) }}</td>
-                                    <td class="px-6 py-4 whitespace-nowrap">
+                                    <td class="px-6 py-4 whitespace-nowrap created-date">
                                         {{ \Carbon\Carbon::parse($order->transaction_created_at)->format('Y-m-d') }}
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-left">
@@ -56,28 +65,6 @@
                                         <div class="text-sm font-medium flex justify-center gap-2 text-center">
                                             <a href="{{ route('order-tracking.show', $order->order_id) }}"
                                                 class="h-8 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">View</a>
-                                            <form action="{{ route('order-tracking.destroy', $order->order_id) }}"
-                                                method="POST" id="delete-form-{{ $order->order_id }}">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="button"
-                                                    class="h-8 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-                                                    onclick="confirmDelete('{{ $order->order_id }}')">Delete</button>
-                                            </form>
-
-                                            <script>
-                                                function confirmDelete(orderId) {
-                                                    // Display confirmation prompt
-                                                    const userInput = prompt("To proceed with deletion, please type 'VOID':");
-                                                    if (userInput === "VOID") {
-                                                        // Submit the form if input matches "VOID"
-                                                        document.getElementById(`delete-form-${orderId}`).submit();
-                                                    } else {
-                                                        // Show failed deletion message
-                                                        alert("Deletion failed! You did not type 'VOID'.");
-                                                    }
-                                                }
-                                            </script>
                                         </div>
                                     </td>
                                 </tr>
@@ -95,11 +82,13 @@
                 <div class="mt-4">
                     {{ $orders->links() }}
                 </div>
+                <!-- Total Sales -->
                 <div id="total-sales"
                     class="bg-gray-100 px-6 py-3 mt-2 text-lg font-semibold text-gray-800 flex justify-between">
                     <span>Total Sales: </span>
                     <p>₱ <span>0.00</span></p>
                 </div>
+                <!-- Include External JS File -->
                 <script src="{{ asset('common/js/salesFilter.js') }}"></script>
             </div>
         </div>
